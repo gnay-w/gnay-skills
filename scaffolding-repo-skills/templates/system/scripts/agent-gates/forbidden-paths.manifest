@@ -1,0 +1,4 @@
+# One relative path per line (directories or files that must not reappear).
+# Fill during scaffold from target-repo doc bans, e.g.:
+# docs/api
+# docs/agents
