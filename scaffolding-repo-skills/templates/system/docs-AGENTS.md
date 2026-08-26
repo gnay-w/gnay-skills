@@ -1,6 +1,6 @@
 # 文档分层与写作标准（Agent）
 
-本文件规定本仓**文档怎么放、谁是唯一真源、何时必须写 Note / Postmortem**。站岗铁律见根 [`AGENTS.md`](../AGENTS.md)；本文件只管文档体系本身。
+本文件规定本仓**文档怎么放、谁是唯一真源、何时必须写 Note / Postmortem**，以及**根 `AGENTS.md` / 站岗文的书写原则**。站岗铁律见根 [`AGENTS.md`](../AGENTS.md)；本文件只管文档体系本身。
 
 ## 分层表
 
@@ -11,10 +11,19 @@
 | [`.agents/notes/`](../.agents/notes/README.md) | 为什么选 / 否了什么；非琐碎改动的决策记忆 | 功能怎么做的逐步 plan；运维命令 |
 | [`.agents/skills/`](../.agents/skills/) | Agent skill **正文真源**；Claude/Cursor 目录仅发现壳 | 在 `.claude/skills` / `.cursor/skills` 复制整份流程 |
 | [`docs/postmortem/`](postmortem/README.md) | 系统性事故：漏网分析 → 护栏 | 日常 bug 流水账；未落地的设想 |
-| `{{SPECS_PATH}}` | 功能做什么、怎么拆、任务验收 | Agent 站岗长文、文档分层标准、日常铁律正文 |
-| `{{TECH_DEBT_PATH}}` | 债台账与优先级 | 决策替代品；事故叙事 |
-| `{{OPS_RUNBOOK_PATH}}` | 运维命令真源（若有） | 架构设计；产品背景 |
+| {{SPECS_PATH}} | 功能做什么、怎么拆、任务验收 | Agent 站岗长文、文档分层标准、日常铁律正文 |
+| {{TECH_DEBT_PATH}} | 债台账与优先级 | 决策替代品；事故叙事 |
+| {{OPS_RUNBOOK_PATH}} | 运维命令真源（若有） | 架构设计；产品背景 |
 {{PLACEMENT_EXTRA_ROWS}}
+
+## 根 AGENTS.md 书写原则
+
+- **每会话短文：** 只留铁律摘要、「以后怎么工作」、**文档地图**、Skills 索引、高频命令；细节进专篇。
+- **一事实一家：** 改规则只改一家正文；根与专篇冲突 → 以专篇为准并立刻修根摘要。
+- **文档地图必含本文件：** 明确写出分层 / 一事实一家 / 词数预算 / 维护义务 / 书写原则落在本文件。
+- **词数硬顶：** 根 ≤{{WORD_BUDGET_ROOT}}、本文件 ≤{{WORD_BUDGET_DOCS_AGENTS}}（`{{GATE_COMMAND}}`）；超顶拆专篇，不抬预算。
+- **原生文风：** 直接写本仓机制、路径与义务；禁止「移植自某某项目」溯源套话。
+- **specs/plans 不当现行权威：** 现行行为以专篇 / Notes / 代码为准。
 
 ## 一事实一家
 

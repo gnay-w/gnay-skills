@@ -61,7 +61,8 @@ Templates must stay **brand-free**: same section flow and rules as the reference
 3. One fact, one home.
 4. Notes dual-axis: `{lifecycle}/{class}/yyyy-mm-dd-topic.md` with **full 4×6 tree** (`create-notes-tree.sh`).
 5. Docs gates ≠ default business `test`.
-6. See [dependencies.md](references/dependencies.md), [explore-fill.md](references/explore-fill.md), [shapes.md](references/shapes.md).
+6. **AGENTS 书写原则（硬门槛）：** 正文在 `docs/AGENTS.md`（分层、一事实一家、词数预算、维护义务、放置禁令、**根 AGENTS 书写原则**）。根 `AGENTS.md` **必须**有「文档地图」且含指向该文件的一行；禁止只写一句「见 docs/AGENTS」却无地图表、或根本不建 `docs/AGENTS.md`。改造老仓时若缺上述任一 → **未完成 system**。
+7. See [dependencies.md](references/dependencies.md), [explore-fill.md](references/explore-fill.md), [shapes.md](references/shapes.md), [agents-skills-section.md](references/agents-skills-section.md).
 
 ## Mode explain
 
@@ -77,14 +78,16 @@ Cover system package, skill shapes, **new vs retrofit**, dependency graph, AGENT
 
 | Template | Destination |
 |---|---|
-| `AGENTS.md` | 新：创建；老：按章节合并（保留域摘要） |
-| `docs-AGENTS.md` | `docs/AGENTS.md`（老：合并放置/义务表） |
+| `AGENTS.md` | 新：创建（含**文档地图**）；老：合并「以后怎么工作」+ **文档地图**（必含书写原则行）+ Skills；保留域摘要 |
+| `docs-AGENTS.md` | `docs/AGENTS.md` — **书写原则真源**（新：创建；老：合并放置/义务/**根 AGENTS 书写原则**节；缺则补） |
 | `notes-README.md` | `.agents/notes/README.md`（老：对齐合约，勿抹掉有效链） |
 | `create-notes-tree.sh` | 铺/补 4×6；老仓已有 Note 文件则 **git mv** 进正确 lifecycle/class |
 | `postmortem-README.md` / `postmortem-TEMPLATE.md` | `docs/postmortem/` |
 | `development.md` | `docs/development.md`（老：保留命令表，补门纪律） |
 | `scripts/agent-gates/*` | `scripts/agent-gates/`（老：合并 manifest，勿盲覆写已定制脚本除非等价） |
 | dirs | `.agents/skills/`、`.claude/skills/`、`.cursor/skills/` |
+
+**system 完成检查（新/老共通）：** `docs/AGENTS.md` 存在且含书写原则相关节；根 `AGENTS.md` 有文档地图并链到它；notes 4×6 + README；gates 可跑。
 
 Wire Makefile via `Makefile.snippet` if asked.
 
@@ -109,6 +112,7 @@ Wire Makefile via `Makefile.snippet` if asked.
 - 老项目直接整文件覆盖仍有效的 `AGENTS.md` / 专篇 / Notes
 - 新项目却「只改口不做骨架」留下半套布局
 - 未判定新/老就开始写文件
+- **改造完成却未落地 `docs/AGENTS.md` 书写原则，或根 AGENTS 无文档地图指向它**
 - Copying a product repo’s AGENTS/domain iron rules into this bag
 - Leaving product brand strings inside templates
 - Long SKILL before template/patch on disk

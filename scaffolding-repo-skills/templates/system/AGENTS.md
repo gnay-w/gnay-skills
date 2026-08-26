@@ -16,7 +16,7 @@
 
 | 文档 | 用途 |
 |---|---|
-| [`docs/AGENTS.md`](docs/AGENTS.md) | 分层、一事实一家、词数预算、维护义务 |
+| [`docs/AGENTS.md`](docs/AGENTS.md) | **书写原则**：分层、一事实一家、词数预算、维护义务 |
 | [`docs/development.md`](docs/development.md) | 本地命令与质量门 |
 | [`docs/postmortem/`](docs/postmortem/README.md) | 事故 → 护栏 |
 | [`.agents/notes/`](.agents/notes/README.md) | 决策记忆 |

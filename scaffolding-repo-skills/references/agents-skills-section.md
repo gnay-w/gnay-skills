@@ -1,12 +1,16 @@
-# Root AGENTS.md — Skills section (pattern)
+# Root AGENTS.md — Skills section & writing principles
 
-## Writing principles
+## Writing principles（真源在 `docs/AGENTS.md`）
 
-- **Per-session only:** short iron rules, how-we-work, doc map, skill index — not full domain tutorials.
+Scaffold **must** install/merge `docs/AGENTS.md` with: placement table, one-fact-one-home, word budgets, Note/postmortem when-to, maintenance obligations, placement bans, and a **「根 AGENTS.md 书写原则」** section.
+
+Root `AGENTS.md` **must** include a **文档地图** table whose first/primary row links to `docs/AGENTS.md` as writing principles. A single prose sentence “see docs/AGENTS” without a map row is **not** enough.
+
+## Per-session root AGENTS
+
+- Short iron rules, how-we-work, doc map, skill index — not full domain tutorials.
 - Domain detail = **summary + link** to `docs/*.md`.
-- **One fact, one home**; root vs standing conflict → standing wins, fix root summary.
-- Word budgets on root / `docs/AGENTS.md` (default 1600 / 1200) via doc gate.
-- Native prose: this repo’s mechanisms; no “ported from …” framing.
+- Native prose; no “ported from …” framing.
 - Specs/plans = task history, not current behavioral authority.
 
 ## Skills subsection
