@@ -1,7 +1,6 @@
 # Explore → fill map
 
-After templates are on disk, read the **target** repo and replace placeholders. Never copy another product’s domain iron rules into placeholders unchanged.
-
+After shapes are on disk (**new:** copied skeletons; **legacy:** patches/migrations), read the **target** repo and replace placeholders. Never copy another product’s domain iron rules into placeholders unchanged.
 ## Universal
 
 | Placeholder | Explore source |
