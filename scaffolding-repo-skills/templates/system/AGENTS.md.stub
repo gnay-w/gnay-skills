@@ -1,0 +1,34 @@
+# {{REPO_NAME}} — AGENTS.md
+
+{{REPO_ONE_LINER}}
+
+本文件只写本仓站岗铁律与「以后怎么工作」。文档分层与**维护义务**见 [`docs/AGENTS.md`](docs/AGENTS.md)。
+
+## 以后怎么工作
+
+1. 读本文件铁律 → 相关 [`docs/`](docs/) 专篇 → 搜 [`.agents/notes/`](.agents/notes/README.md)
+2. **非琐碎决策 agent 主动写/更新 Agent Note**（未建成→`proposed`，已落地→`implemented`，否决→`rejected`；机械改动豁免，见 notes README）；行为/契约变了按 [`docs/AGENTS.md`](docs/AGENTS.md)「维护义务」同步文档
+3. **系统性翻车 agent 主动写** [`docs/postmortem/`](docs/postmortem/README.md) + 更新事故→门表
+4. 提交前：`{{GATE_COMMAND}}`；按需跑业务测试（见 development 文档若有）
+5. 功能怎么做：`{{SPECS_PATH}}`；为什么/否决：Notes
+
+{{HOW_WE_WORK_EXTRA}}
+
+## 文档地图
+
+| 文档 | 用途 |
+|---|---|
+| [`docs/AGENTS.md`](docs/AGENTS.md) | 分层、一事实一家、词数预算、维护义务 |
+| [`.agents/notes/`](.agents/notes/README.md) | 决策记忆 |
+| [`docs/postmortem/`](docs/postmortem/README.md) | 事故 → 护栏 |
+{{DOC_MAP_ROWS}}
+
+## Skills
+
+Skill **正文真源**一律在 [`.agents/skills/`](.agents/skills/)。`.claude/skills/` 与 `.cursor/skills/` 只放**发现壳**（同名目录，指向真源）；改流程只改 `.agents/skills/`。
+
+| Skill（`.agents/skills/…`） | 文档/脚本真源 |
+|---|---|
+{{SKILLS_TABLE_ROWS}}
+
+<!-- Fill guide: keep this file under {{WORD_BUDGET_ROOT}} words; domain detail → docs/*.md summaries + links only. -->

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+DIR="$(cd "$(dirname "$0")" && pwd)"
+echo "== agent-gates: doc budgets =="
+bash "${DIR}/verify-doc-budgets.sh"
+echo "== agent-gates: note format =="
+bash "${DIR}/verify-agent-note-format.sh"
+echo "== agent-gates: note classification =="
+bash "${DIR}/verify-agent-note-classification.sh"
+echo "== agent-gates: skill shells =="
+bash "${DIR}/verify-skill-shells.sh"
+echo "agent-gates: all passed"

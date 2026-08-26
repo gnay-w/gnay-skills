@@ -1,0 +1,61 @@
+# 文档分层与写作标准（Agent）
+
+本文件规定本仓**文档怎么放、谁是唯一真源、何时必须写 Note / Postmortem**。站岗铁律见根 [`AGENTS.md`](../AGENTS.md)；本文件只管文档体系本身。
+
+## 分层表
+
+| 位置 | 管什么 | 不放什么 |
+|---|---|---|
+| 根 [`AGENTS.md`](../AGENTS.md) | 每会话站岗：短铁律、「以后怎么工作」、文档地图与 skill 索引 | 长篇教程、历史决策叙事 |
+| `docs/*.md` 专篇 | 某一域的**唯一正文** | 与根 AGENTS 重复的整段复印 |
+| [`.agents/notes/`](../.agents/notes/README.md) | 为什么选 / 否了什么 | 逐步 plan；运维命令 |
+| [`.agents/skills/`](../.agents/skills/) | Agent skill **正文真源**；Claude/Cursor 仅发现壳 | 在 IDE 目录复制整份流程 |
+| [`docs/postmortem/`](postmortem/README.md) | 系统性事故 → 护栏 | 日常 bug 流水账 |
+| `{{SPECS_PATH}}` | 功能做什么、怎么拆 | Agent 站岗长文 |
+{{PLACEMENT_EXTRA_ROWS}}
+
+## 一事实一家
+
+- 改规则只改**一家**正文；别处只保留摘要 + 链接。
+- 根 AGENTS 与专篇冲突时，以专篇为准并立刻修根摘要。
+- 禁止在 specs/plans 树再写一份站岗长文「备份」。
+
+## 词数预算（硬顶）
+
+| 文件 | 上限（`wc -w`） |
+|---|---|
+| 根 `AGENTS.md` | {{WORD_BUDGET_ROOT}} |
+| `docs/AGENTS.md`（本文件） | {{WORD_BUDGET_DOCS_AGENTS}} |
+
+超顶由 `{{GATE_COMMAND}}` 失败。需要更多细节时拆专篇或 Note，**不要**抬预算绕过。
+
+## 何时写 Agent Note
+
+非琐碎决策须在同变更中新增或更新 [`.agents/notes`](../.agents/notes/README.md)。**一张 Note 一个决策**；**跟决策不跟流程名**；agent **主动**落盘。拍板当下见 agent-notes skill（`{{NOTES_SKILL_LINK}}`）。未建成→`proposed`，已落地→`implemented`，否决→`rejected`。归档见 `{{ARCHIVE_SKILL_LINK}}`。
+
+## 何时写 Postmortem
+
+系统性事故——agent **主动**写 [`docs/postmortem`](postmortem/README.md) 并更新事故→门。单点笔误修完即止的不算。不要用 Note 代替事故→门。
+
+## 维护义务
+
+行为 / 契约 / 铁律变了，**同变更**必须更新对应文档（缺文档 = review 阻塞）。
+
+| 变更类型 | 必须更新 |
+|---|---|
+| 站岗铁律 / 分层 / 域专篇 | 对应 `docs/*.md`；根 AGENTS 仅在摘要漂移时修 |
+| 非琐碎决策 / 否决 | `.agents/notes` |
+| 系统性事故 → 护栏 | `docs/postmortem` + 事故→门 |
+| Skill 工作流 | `.agents/skills/`（壳不复印） |
+{{MAINTENANCE_EXTRA_ROWS}}
+
+**保鲜：** 站岗与代码冲突 → 先改文档真源或同 PR 一起改；specs/plans **不**当现行行为权威。
+
+## 放置禁令
+
+- Agent 站岗长文禁止放入 specs/plans 树。
+- 禁止把规范写成「外来移植说明」；直接写本仓机制、路径与义务。
+
+## 提交前
+
+改了站岗文档、Notes、postmortem 或文档链接后，本地跑 `{{GATE_COMMAND}}`。

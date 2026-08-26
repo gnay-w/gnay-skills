@@ -1,53 +1,62 @@
 # Shape catalog (Janus-aligned IDs)
 
-| Shape ID | Janus counterpart | Template / source |
-|---|---|---|
-| `agent-notes` | `janus-agent-notes` | `templates/agent-notes/` |
-| `doc-standards` | `janus-doc-standards` | `templates/doc-standards/` |
-| `archive-agent-notes` | `janus-archive-agent-notes` | `templates/archive-agent-notes/` |
-| `code-review` | `janus-code-review` | `templates/code-review/` |
-| `pre-push-checks` | `janus-pre-push-checks` | `templates/pre-push-checks/` |
-| `acceptance-console-http` | same name | bag root `acceptance-console-http/` (copy tree) |
+| Shape ID | Janus counterpart | Template / source | System dep |
+|---|---|---|---|
+| _(system)_ | standing layout | `templates/system/` | — |
+| `agent-notes` | `janus-agent-notes` | `templates/agent-notes/` | notes README |
+| `doc-standards` | `janus-doc-standards` | `templates/doc-standards/` | `docs/AGENTS.md` |
+| `archive-agent-notes` | `janus-archive-agent-notes` | `templates/archive-agent-notes/` | notes README |
+| `code-review` | `janus-code-review` | `templates/code-review/` | root AGENTS |
+| `pre-push-checks` | `janus-pre-push-checks` | `templates/pre-push-checks/` | gates/docs |
+| `acceptance-console-http` | same | bag `acceptance-console-http/` | none |
 
 Not in catalog: `ops-runbook`, `deploy-prod`.
 
-Every generative scaffold also installs discovery shells from `shell-template.md`.
+See also: [dependencies.md](dependencies.md), [explore-fill.md](explore-fill.md).
+
+---
+
+## system (not a skill shape)
+
+**Copy** `templates/system/` per SKILL `scaffold-system` table.  
+**Explore/fill** AGENTS stubs, notes README skill links, budgets, Makefile snippet.  
+**Create** `.agents/notes/{proposed,implemented,rejected,archived}/`, `.agents/skills/`, `.claude/skills/`, `.cursor/skills/`.
 
 ---
 
 ## agent-notes
 
-**Use when:** decision locked / rejected / writing specs with new tradeoffs; proactive, user need not ask.
+**Use when:** decision locked / rejected / writing specs with new tradeoffs; proactive.
 
-**Copy:** `templates/agent-notes/SKILL.md` → `.agents/skills/{{SKILL_DIR}}/` + shells.
+**Copy:** template + shells. **Requires:** `.agents/notes/README.md`.
 
-**Explore:** notes README (when to write, lifecycle, skeleton); archive skill if present; root AGENTS “how we work” bullet on Notes.
+**Explore:** notes README; archive/doc-standards sibling dirs; root AGENTS how-we-work.
 
-**Fill:** triggers, notes path layout, class enum, gate command, sibling skill names, forbid list aligned to repo.
+**Fill:** triggers, path pattern, gate command, sibling names, forbid list. See explore-fill.md.
 
 ---
 
 ## doc-standards
 
-**Use when:** writing/editing standing docs, maps, Note prose/placement — not the decision-lock moment (defer to agent-notes).
+**Use when:** writing/editing standing docs — not decision-lock (defer to agent-notes).
 
-**Copy:** `templates/doc-standards/` + shells.
+**Copy:** template + shells. **Requires:** `docs/AGENTS.md` (install via system if missing).
 
-**Explore:** `docs/AGENTS.md` or equivalent; root AGENTS map; word budgets; maintenance obligation table; postmortem location.
+**Explore:** placement/maintenance/budgets; agent-notes skill name.
 
-**Fill:** placement table, budgets, maintenance rows, link to agent-notes / archive skills, gate command.
+**Fill:** placement rows, budgets, maintenance, postmortem rule, gate command.
 
 ---
 
 ## archive-agent-notes
 
-**Use when:** supersession on new Note; archive/prune rejected; keep-vs-archive by future value.
+**Use when:** supersession / archive / prune rejected.
 
-**Copy:** `templates/archive-agent-notes/` + shells.
+**Copy:** template + shells. **Requires:** notes README.
 
-**Explore:** notes README lifecycle rules; gate command; 1–2 repo-specific keep/archive calibration examples if available.
+**Explore:** lifecycle rules; 1–2 keep/archive examples from repo notes if any.
 
-**Fill:** path rules, classification bullets, report format, link to pre-push-checks.
+**Fill:** classification, examples, gate, pre-push link.
 
 ---
 
@@ -55,32 +64,27 @@ Every generative scaffold also installs discovery shells from `shell-template.md
 
 **Use when:** reviewing PR or local changeset.
 
-**Copy:** `templates/code-review/` + shells.
+**Copy:** template + shells.
 
-**Explore:** standing iron-law docs; Notes/postmortem rules; what automated gates already catch.
+**Explore:** standing iron-law docs; what gates already catch.
 
-**Fill:** authority links; blocking checklist items (repo-specific); output sections. Prefer “gates already catch → mention gate, don’t essay”.
+**Fill:** authority links; domain blocking checks; semantics bullets; output stays four-tier.
 
 ---
 
 ## pre-push-checks
 
-**Use when:** before push or before claiming checks passed.
+**Use when:** before push or claiming checks passed.
 
-**Copy:** `templates/pre-push-checks/` + shells.
+**Copy:** template + shells.
 
-**Explore:** Makefile / package scripts / `docs/development.md`; whether doc gates are separate from unit tests.
+**Explore:** Makefile / development doc / CI.
 
-**Fill:** diff→command matrix; claim report template; link related skills.
+**Fill:** gate matrix; claim report; sibling skill links.
 
 ---
 
 ## acceptance-console-http
 
-**Use when:** product work done and pushed; user asks 验收 / ensure_project / create_job / ACCEPT_*.
-
-**Copy:** entire `gnay-skills/acceptance-console-http/` → `TARGET/.agents/skills/acceptance-console-http/` (keep `SKILL.md` + `reference-http.md`). Then shells with matching description from that SKILL frontmatter.
-
-**Explore:** target `repo_url`, baseline branch, AGENTS acceptance blurb — update only repo-specific constants in AGENTS index / example section if the vendored SKILL has a per-repo example block; prefer minimal edits.
-
-**Do not** invent a new api-playbook shape.
+**Copy:** entire bag `acceptance-console-http/` → `.agents/skills/acceptance-console-http/` + shells.  
+**Do not** regenerate as a blank api-playbook.

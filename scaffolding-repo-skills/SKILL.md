@@ -1,91 +1,121 @@
 ---
 name: scaffolding-repo-skills
 description: >
-  Use when explaining or auditing a Janus-style repo skill system; when adding a
-  skill (agent-notes, doc-standards, archive-agent-notes, code-review,
-  pre-push-checks) to a product repo; when copying acceptance-console-http; or
-  when wiring .agents/skills plus Claude/Cursor discovery shells. Do not use for
-  Janus-only ops-runbook or deploy-prod playbooks.
+  Use when explaining or auditing a Janus-style repo skill system; when scaffolding
+  the standing system (AGENTS, notes contract, postmortem, agent-gates); when adding
+  skills (agent-notes, doc-standards, archive-agent-notes, code-review, pre-push-checks);
+  when running scaffold-suite for a full install; when copying acceptance-console-http;
+  or when wiring discovery shells. Do not use for ops-runbook or deploy-prod.
 ---
 
 # Scaffolding repo skills
 
-Single skill, two modes: **explain** (no file writes) and **scaffold** (copy templates → explore repo → fill placeholders).
+Modes: **explain** (no writes) | **scaffold** (copy → explore → fill).
 
-Does **not** produce `ops-runbook` or `deploy-prod` shapes (project-specific). `acceptance-console-http` is **vendored copy only**.
+Scaffold kinds:
+
+| Kind | When |
+|---|---|
+| `scaffold-system` | Greenfield or missing Notes/AGENTS/gates layout |
+| `scaffold-skill` | One shape into a repo that already has (or just got) system |
+| `scaffold-suite` | System + five generative skills + shells (+ optional acceptance) |
+
+Iron order for every scaffold kind: **copy templates to disk first → explore target → fill `{{PLACEHOLDER}}`**. Never author long skills from scratch before copy.
+
+Does **not** produce `ops-runbook` or `deploy-prod`. `acceptance-console-http` = vendored copy only.
 
 ## Mode selection
 
-| Signal | Mode |
+| Signal | Mode / kind |
 |---|---|
-| User wants files added / shells / copy acceptance | **scaffold** |
-| User asks how the system works, audits existing skills, picks a shape | **explain** |
-| Unclear | Ask once: explain only, or scaffold now? |
+| How does this work / audit | **explain** |
+| 「整套装上」「scaffold-suite」 | **scaffold-suite** |
+| Missing notes/AGENTS/gates only | **scaffold-system** |
+| Add one skill | **scaffold-skill** (if system deps missing → run system first or abort with list) |
+| Unclear | Ask once |
 
-## Shared rules (both modes)
+## Shared rules
 
-1. **Canonical body** lives in `.agents/skills/<name>/SKILL.md` only. `.claude/skills/` and `.cursor/skills/` are discovery shells (≤40 lines) that point at the canonical path.
-2. **description** = Use when… (triggers/symptoms). Never summarize the workflow in the description.
-3. **One fact, one home** — handbooks/runbooks stay outside the skill; skills link them.
-4. Root **AGENTS.md** Skills section: short layout rule + table row `skill → truth source` (see [references/agents-skills-section.md](references/agents-skills-section.md)).
-5. Shape IDs align with Janus names (minus optional `janus-` prefix): see [references/shapes.md](references/shapes.md).
+1. Canonical body: `.agents/skills/<name>/SKILL.md`. Shells: `.claude/skills/` + `.cursor/skills/` (≤40 lines) → canonical path.
+2. description = Use when… only (no workflow summary).
+3. One fact, one home — handbooks outside skills; skills link.
+4. Root AGENTS Skills table: skill → truth source ([references/agents-skills-section.md](references/agents-skills-section.md)).
+5. Shape IDs and deps: [references/shapes.md](references/shapes.md), [references/dependencies.md](references/dependencies.md).
+6. Placeholder ← explore map: [references/explore-fill.md](references/explore-fill.md).
 
 ## Mode explain
 
-1. Show the shape menu in `shapes.md`.
-2. Walk AGENTS writing principles (standing rules short; map + links; maintenance obligations; native prose).
-3. Audit checklist for an existing skill:
-   - Body duplicated in IDE shells?
-   - Shell missing or missing canonical path?
-   - Description leaks procedure?
-   - Handbook pasted into SKILL instead of linked?
+Cover: shape menu, system package, dependency graph, AGENTS principles, audit checklist (dual source, shells, description leak, missing notes contract under agent-notes). No file writes.
 
-Do not write files in explain mode.
+## scaffold-system
 
-## Mode scaffold
+**Goal:** standing mechanism, not business skills.
 
-**Iron order: copy templates first → explore project → enrich. Do not author a full skill from scratch before templates are on disk.**
+1. Target repo path (not `gnay-skills` unless user says so).
+2. Copy `templates/system/` into target:
 
-### Steps
+| Template | Destination |
+|---|---|
+| `AGENTS.md.stub` | merge into root `AGENTS.md` or create if missing (prefer merge Skills + how-we-work stubs) |
+| `docs-AGENTS.md.stub` | `docs/AGENTS.md` |
+| `notes-README.md` | `.agents/notes/README.md` |
+| `notes-skeletons/*.md` | keep under bag for reference **or** copy to `.agents/notes/_skeletons/` (optional) |
+| `postmortem-README.md.stub` | `docs/postmortem/README.md` |
+| `postmortem-TEMPLATE.md` | `docs/postmortem/TEMPLATE.md` |
+| `scripts/agent-gates/*` | `scripts/agent-gates/` |
+| create empty dirs | `.agents/notes/{proposed,implemented,rejected,archived}/.gitkeep` (or class dirs on first note) |
+| create | `.agents/skills/`, `.claude/skills/`, `.cursor/skills/` |
 
-1. **Target repo** — path from user. Do **not** write into `gnay-skills` unless they explicitly want a bag-local skill.
-2. **Greenfield** — if `.agents/skills/` missing: ask whether to create the minimal layout first; on yes, create dirs + optional AGENTS Skills stub from `references/agents-skills-section.md`.
-3. **Pick shape ID** from `shapes.md` (or `acceptance-console-http`).
-4. **Copy templates**
-   - Generative shapes: copy `templates/<shape-id>/SKILL.md` → `TARGET/.agents/skills/{{SKILL_DIR}}/SKILL.md`
-   - Always copy [references/shell-template.md](references/shell-template.md) into both:
-     - `TARGET/.claude/skills/{{SKILL_DIR}}/SKILL.md`
-     - `TARGET/.cursor/skills/{{SKILL_DIR}}/SKILL.md`
-   - `acceptance-console-http`: copy whole directory from this bag’s `acceptance-console-http/` (includes `reference-http.md`); then add shells. Do not rewrite it into a new “api-playbook”.
-5. **Explore** the target (read what exists):
-   - Root `AGENTS.md`, `docs/AGENTS.md` if any
-   - Notes/contracts README paths
-   - `docs/development.md` / Makefile / test commands
-   - Domain standing docs for review checklist
-   - Existing `.agents/skills/*`
-6. **Fill** every `{{PLACEHOLDER}}` in the copied SKILL (and shells: `{{SKILL_DIR}}`, `{{DESCRIPTION}}`). Use exploration facts; leave a short “still empty” list if something cannot be inferred.
-7. **AGENTS index** — print a suggested Skills table row; edit the file only if the user asks.
-8. **Report** — paths created/updated; placeholders filled vs remaining; remind shell-symmetry gate if the repo has one.
+3. Explore: existing AGENTS, Makefile, repo name, preferred gate invoke (`make agent-gates` vs `bash scripts/agent-gates/run-all.sh`).
+4. Fill all `{{…}}` in copied system files (see explore-fill.md).
+5. Wire Makefile target if Makefile exists and user agrees; else print suggested snippet.
+6. Report paths + remaining placeholders.
 
-### Naming
+## scaffold-skill
 
-- Shape ID = Janus trunk without requiring `janus-` (e.g. `agent-notes`).
-- On-disk dir `{{SKILL_DIR}}` = user choice, often `{repo}-agent-notes` or plain `agent-notes`.
-- `acceptance-console-http` keeps that exact directory name.
+1. Check [dependencies.md](references/dependencies.md). If required system files missing → offer `scaffold-system` first; do not leave orphan agent-notes without notes README.
+2. Pick shape ID; set `{{SKILL_DIR}}` (often `{repo}-agent-notes` or plain trunk name).
+3. Copy `templates/<shape-id>/SKILL.md` → `.agents/skills/{{SKILL_DIR}}/`; shells from `references/shell-template.md`.
+4. For `acceptance-console-http`: copy bag `acceptance-console-http/` whole tree; then shells.
+5. Explore + fill per shapes.md / explore-fill.md.
+6. Print AGENTS Skills row; edit file only if asked.
+7. Run `scripts/agent-gates/verify-skill-shells.sh` if present.
+
+## scaffold-suite
+
+Runs in order:
+
+1. `scaffold-system`
+2. For each generative shape (`agent-notes`, `doc-standards`, `archive-agent-notes`, `code-review`, `pre-push-checks`): `scaffold-skill` with consistent `{{SKILL_PREFIX}}` (e.g. `janus-` or empty) so cross-links match
+3. Ask whether to copy `acceptance-console-http`
+4. Fill cross-skill placeholders so sibling names agree
+5. Suggest full AGENTS Skills table
+6. Run `scripts/agent-gates/run-all.sh` if scripts installed
+
+## Naming
+
+- Shape ID ≈ Janus trunk without requiring prefix (`agent-notes`).
+- On-disk dir = `{{SKILL_PREFIX}}{{shape}}` or user override.
+- `acceptance-console-http` keeps exact name.
 
 ## Anti-patterns
 
-- Writing a long SKILL before copying the template
-- Pasting full handbooks into SKILL.md
-- Thick copies under `.claude` / `.cursor`
-- Scaffolding ops-runbook or deploy-prod via this skill
-- Regenerating acceptance instead of copying the vendored tree
-- Description that narrates the procedure
+- Long SKILL before template copy
+- Handbook pasted into SKILL
+- Thick IDE shells
+- ops-runbook / deploy-prod via this skill
+- Rewriting acceptance instead of copying
+- agent-notes without `.agents/notes/README.md`
+- Description that narrates procedure
+- Claiming suite done while `{{PLACEHOLDER}}` remain
 
 ## References
 
-- [shapes.md](references/shapes.md) — per-shape copy/explore/fill
+- [shapes.md](references/shapes.md)
+- [dependencies.md](references/dependencies.md)
+- [explore-fill.md](references/explore-fill.md)
 - [shell-template.md](references/shell-template.md)
 - [agents-skills-section.md](references/agents-skills-section.md)
-- `templates/<shape-id>/` — generative skeletons
-- `../acceptance-console-http/` — vendored copy source
+- `templates/system/` — standing mechanism
+- `templates/<shape-id>/` — skill skeletons
+- `../acceptance-console-http/` — vendored copy
