@@ -7,7 +7,7 @@ One top-level directory per skill (or vendored tree). No loose `SKILL.md` at rep
 
 | Directory | Role |
 |---|---|
-| [`scaffolding-repo-skills/`](scaffolding-repo-skills/) | Meta skill: explain or scaffold (`system` / `skill` / `suite`). **Templates = shared flow/logic + placeholders**; fill from the **target** repo. No product brand inside templates. |
+| [`scaffolding-repo-skills/`](scaffolding-repo-skills/) | Meta skill: explain or scaffold (`system` / `skill` / `suite`). **新项目骨架生成 / 老项目改造**；templates = shared flow/logic + placeholders. No product brand inside templates. |
 | [`acceptance-console-http/`](acceptance-console-http/) | Vendored acceptance skill — copy into product `.agents/skills/` as-is. |
 
 ### System package (`templates/system/`)
@@ -31,7 +31,9 @@ ln -sfn "$(pwd)/acceptance-console-http" ~/.agents/skills/acceptance-console-htt
 
 ## Use
 
-- Full: scaffold-suite on a product repo  
+- Full: scaffold-suite（先判新/老）  
 - Layout only: scaffold-system  
 - One skill: scaffold-skill + shape id  
-- Acceptance: copy `acceptance-console-http/`
+- Acceptance: copy `acceptance-console-http/`  
+
+新仓：按模板建齐。老仓：先审计再增量改造，禁止整文件铲平有效站岗文。
