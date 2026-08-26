@@ -7,36 +7,35 @@ Each top-level directory is **one skill** (or one vendored skill tree). Do not d
 
 | Directory | Role |
 |---|---|
-| [`scaffolding-repo-skills/`](scaffolding-repo-skills/) | Meta skill: explain Janus-style skill system **or** scaffold into a product repo (copy templates → explore → fill). |
-| [`acceptance-console-http/`](acceptance-console-http/) | Vendored skill — **copy as-is** into product `.agents/skills/` (not generated from a blank template). |
+| [`scaffolding-repo-skills/`](scaffolding-repo-skills/) | Meta skill: **explain** or **scaffold** (`scaffold-system` / `scaffold-skill` / `scaffold-suite`). Copy templates → explore → fill. |
+| [`acceptance-console-http/`](acceptance-console-http/) | Vendored skill — copy as-is into product `.agents/skills/`. |
 
 Not included (product-specific): `ops-runbook`, `deploy-prod`.
 
-## Install for local discovery
+### What `scaffolding-repo-skills` ships
 
-Symlink into your agent skills path (adjust if you use `~/.claude/skills` only):
+- **Skill shapes:** `agent-notes`, `doc-standards`, `archive-agent-notes`, `code-review`, `pre-push-checks`
+- **System package** (`templates/system/`): root AGENTS stub, `docs/AGENTS.md`, notes README + skeletons, postmortem stubs, portable `scripts/agent-gates/` (shells, note format/class, doc budgets)
+- **References:** shapes, dependencies, explore→fill map, shell template, AGENTS Skills section
+
+## Install for local discovery
 
 ```bash
 mkdir -p ~/.agents/skills
 ln -sfn "$(pwd)/scaffolding-repo-skills" ~/.agents/skills/scaffolding-repo-skills
-# optional: also expose acceptance as a readable source; product repos should copy it in-tree
 ln -sfn "$(pwd)/acceptance-console-http" ~/.agents/skills/acceptance-console-http
 ```
 
-Re-open the agent session (or refresh skills) after linking.
+## Typical use
 
-## Scaffolding workflow (summary)
-
-1. Read `scaffolding-repo-skills/SKILL.md` (modes: explain | scaffold).
-2. On scaffold: copy `templates/<shape-id>/` (or whole `acceptance-console-http/`) into the **target product repo**, add Claude/Cursor shells from `references/shell-template.md`.
-3. Explore the target repo; replace `{{PLACEHOLDER}}`s.
-4. Suggest a root `AGENTS.md` Skills table row (see `references/agents-skills-section.md`).
-
-Shape IDs: `agent-notes`, `doc-standards`, `archive-agent-notes`, `code-review`, `pre-push-checks`, `acceptance-console-http`.
+- **整套：** “用 scaffolding-repo-skills 对 `<repo>` 跑 scaffold-suite”
+- **只要体制：** `scaffold-system`
+- **单 skill：** `scaffold-skill` + shape id（缺 notes 合约会先要求 system）
+- **验收 skill：** 复制 `acceptance-console-http`
 
 ## Adding another skill to this bag
 
-1. Create `gnay-skills/<skill-name>/SKILL.md` (and optional `references/`, `scripts/`).
-2. Do not nest under `scaffolding-repo-skills/` unless it is part of that meta skill.
+1. Create `gnay-skills/<skill-name>/SKILL.md` (+ optional refs/scripts).
+2. Do not nest under `scaffolding-repo-skills/` unless it belongs to that meta skill.
 3. Update this README table.
 4. Commit and push.
