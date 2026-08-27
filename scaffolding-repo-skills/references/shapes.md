@@ -8,7 +8,7 @@ Shape IDs name **portable skill roles** (same jobs/flow as the reference system)
 | `agent-notes` | Decision-lock thin trigger | `templates/agent-notes/` |
 | `doc-standards` | Doc map / budgets / maintenance entry | `templates/doc-standards/` |
 | `archive-agent-notes` | Supersession / archive / prune | `templates/archive-agent-notes/` |
-| `code-review` | Blocking-first review checklist | `templates/code-review/` |
+| `code-review` | Orient reviewer: sources → blocking → manual → reporting | `templates/code-review/` |
 | `pre-push-checks` | Diff → gate picker | `templates/pre-push-checks/` |
 | `acceptance-console-http` | Vendored HTTP acceptance (copy tree) | bag `acceptance-console-http/` |
 

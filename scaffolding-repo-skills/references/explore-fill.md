@@ -30,7 +30,8 @@ After shapes are on disk (**new:** copied skeletons; **legacy:** patches/migrati
 
 | Placeholder | Explore source |
 |---|---|
-| `{{DOMAIN_CHECK_BULLETS}}` / `{{SEMANTICS_BULLETS}}` | target iron-law / defensive docs |
-| `{{AUTHORITY_LINKS_EXTRA}}` | standing docs |
+| `{{DOMAIN_CHECK_BULLETS}}` | target iron-law / layering / defensive docs → **阻塞要求** |
+| `{{SEMANTICS_BULLETS}}` | semantics gates/tests miss → **手工检查** |
+| `{{AUTHORITY_LINKS_EXTRA}}` | standing docs (defensive patterns, testing, package AGENTS, …) |
 | `{{GATE_MATRIX_EXTRA_ROWS}}` | backend/frontend/e2e commands by path |
 | `{{KEEP_EXAMPLES}}` / `{{ARCHIVE_EXAMPLES}}` / `{{REJECTED_EXAMPLES}}` | target notes corpus or generic placeholders left listed in report |
